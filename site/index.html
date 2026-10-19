@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI 智慧筆記摘要器課堂作品：以 Python、uv 與本機 Ollama 將文章整理成三個重點和一句話總結。">
+  <meta name="color-scheme" content="light">
+  <title>AI 智慧筆記摘要器｜課堂作品展示</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳至主要內容</a>
+  <header class="header wrap">
+    <a class="brand" href="#"><span class="logo" aria-hidden="true">N<span>·</span></span> 智慧筆記<span class="brand-note"> / 課堂作品</span></a>
+    <nav aria-label="主要導覽">
+      <a href="#about">作品介紹</a><a href="#run">執行步驟</a><a href="#results">執行結果</a><a href="#ai">AI 使用說明</a>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow"><span class="dot"></span> PYTHON × LOCAL AI</p>
+        <h1 id="hero-title">讓長篇筆記，<br>變成<span class="accent">清楚的重點。</span></h1>
+        <p class="lead">AI 智慧筆記摘要器，把文章交給本機 AI，整理成三個重點與一句話總結，讓閱讀後的複習更有方向。</p>
+        <div class="actions"><a class="button" href="#results">查看成果紀錄 <span aria-hidden="true">↗</span></a><a class="text-link" href="https://github.com/Tagamano/ai-note-summarizer">GitHub 原始碼 ↗</a></div>
+        <p class="hero-note">課堂實作作品 · Python 命令列工具 · 靜態作品展示</p>
+      </div>
+      <div class="concept" aria-label="功能示意：將文章整理為三個重點與一句話總結，非實測輸出">
+        <div class="window-bar"><span aria-hidden="true">● ● ●</span><span>摘要流程 / 功能示意</span></div>
+        <div class="concept-content"><span class="small-label">INPUT / 原始文章</span><div class="paper-lines" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="process">↓ <span>Ollama · qwen2.5:3b</span></div><div class="output"><span class="small-label">OUTPUT / 閱讀重點</span><p><b>01</b> 第一個重點</p><p><b>02</b> 第二個重點</p><p><b>03</b> 第三個重點</p><div class="summary-line">＋ 一句話總結</div></div></div>
+      </div>
+    </section>
+    <div class="stack-strip"><div class="wrap"><span>作品技術</span><strong>Python</strong><strong>uv</strong><strong>Ollama</strong><strong>qwen2.5:3b</strong><span>本機推論 / 繁體中文摘要</span></div></div>
+
+    <section id="about" class="section wrap" aria-labelledby="about-title">
+      <div class="section-heading"><p class="eyebrow">01 / 做了什麼</p><h2 id="about-title">從文章到摘要，<br>保留值得記住的內容。</h2></div>
+      <div class="about-content"><p>這是一個以 Python 製作的命令列筆記工具。使用者貼上多行文章後，程式透過 requests 呼叫本機 Ollama API，請 qwen2.5:3b 以繁體中文產生三個重點與一句話總結。</p><div class="features"><article><span>01</span><h3>多行文章輸入</h3><p>直接貼上筆記或文章，以獨立一行的 <code>/end</code> 完成輸入。</p></article><article><span>02</span><h3>即時串流顯示</h3><p>逐行解析 JSON Lines，在終端逐段顯示模型產生的文字。</p></article><article><span>03</span><h3>本機模型處理</h3><p>文章送至本機 Ollama；目前程式不會儲存文章或摘要。</p></article></div></div>
+    </section>
+
+    <section id="run" class="run-section" aria-labelledby="run-title"><div class="wrap section">
+      <div class="section-heading"><p class="eyebrow">02 / 怎麼執行</p><h2 id="run-title">準備環境，<br>開始第一份摘要。</h2><p>以下以 Windows PowerShell 為例。<br>摘要程式在自己的電腦執行。</p></div>
+      <ol class="steps">
+        <li><div class="step-number">1</div><div><h3>安裝 Python、uv 與 Ollama</h3><p>從 <a href="https://www.python.org/downloads/">Python 官網</a>安裝 Python 3.9 以上，並確認 Python 已加入 PATH。依 <a href="https://docs.astral.sh/uv/getting-started/installation/">uv 官方安裝說明</a>安裝 uv；可使用下方 WinGet 指令。再從 <a href="https://ollama.com/download/windows">Ollama 官網</a>下載並安裝應用程式。安裝後重新開啟終端。</p><pre><code>winget install --id=astral-sh.uv -e
+python --version
+uv --version
+ollama --version</code></pre></div></li>
+        <li><div class="step-number">2</div><div><h3>下載專案並同步依賴</h3><p>在 <a href="https://github.com/Tagamano/ai-note-summarizer">GitHub 專案頁</a>選擇 Code → Download ZIP，解壓縮後於專案資料夾開啟 PowerShell。專案已設定 requests 依賴，直接同步即可。</p><pre><code>cd 你的專案路徑\ai-note-summarizer
+uv sync</code></pre></div></li>
+        <li><div class="step-number">3</div><div><h3>啟動本機模型</h3><p>開啟 Ollama 應用程式，再下載模型。若服務尚未啟動，可在另一個終端執行 <code>ollama serve</code>；已啟動時不用重複執行。</p><pre><code>ollama pull qwen2.5:3b</code></pre></div></li>
+        <li><div class="step-number">4</div><div><h3>執行並輸入文章</h3><pre><code>uv run python main.py</code></pre><p>貼上多行文章，最後單獨輸入 <code>/end</code> 並按 Enter。等待終端顯示三個重點與一句話總結，再自行核對原文。首次載入模型可能較慢。</p></div></li>
+      </ol>
+    </div></section>
+
+    <section id="results" class="section wrap results" aria-labelledby="results-title">
+      <div class="results-heading"><div><p class="eyebrow">03 / 執行結果</p><h2 id="results-title">成果需要真實紀錄。</h2></div><span class="status">實測輸出待補</span></div>
+      <p class="results-intro">作者已確認成功透過 <code>uv run python main.py</code> 執行。目前專案未保留可對照的完整輸入與 AI 輸出，因此以下欄位明確留待補齊，不以示意文字代替實測成果。</p>
+      <!-- 更新成果時，請將同一次真實測試的原文、三個重點、總結與測試資訊一併貼入，並更新待補狀態。 -->
+      <div class="result-grid"><article class="result-card"><div class="card-header"><h3>輸入文章</h3><span>INPUT</span></div><div class="placeholder"><span aria-hidden="true">≡</span><p>待補：實際測試輸入的完整文章。</p><p class="muted">請保留原文，以便核對摘要是否忠實。</p></div></article><article class="result-card result-output"><div class="card-header"><h3>AI 產生的摘要</h3><span>OUTPUT</span></div><ol class="pending-points"><li>待補：AI 實際產生的第一個重點。</li><li>待補：AI 實際產生的第二個重點。</li><li>待補：AI 實際產生的第三個重點。</li></ol><div class="pending-summary"><strong>一句話總結</strong><p>待補：AI 實際產生的一句話總結。</p></div></article></div>
+      <p class="record-note">測試日期：待補 ／ 終端輸出或截圖：待補 ／ 原文與摘要核對結果：待補</p>
+    </section>
+
+    <section id="ai" class="ai-section" aria-labelledby="ai-title"><div class="wrap section"><div><p class="eyebrow">04 / AI 使用說明</p><h2 id="ai-title">AI 協作，<br>由人驗證。</h2><p>清楚記錄工具分工，也對作品內容負責。</p></div><div class="roles"><article><span class="role-tag">開發協助</span><h3>Codex</h3><p>協助撰寫 Python 程式、整理錯誤處理，以及製作本展示網站與文件。</p></article><article><span class="role-tag">文字摘要</span><h3>Ollama + qwen2.5:3b</h3><p>在本機執行模型，依提示將輸入文章整理成繁體中文的三個重點與一句話總結。</p></article><article><span class="role-tag">測試與判斷</span><h3>使用者</h3><p>自行安裝環境並操作測試，已確認 uv 執行成功。摘要仍須逐項核對原文；本頁完整測試紀錄待補。</p></article></div></div></section>
+  </main>
+  <footer class="wrap footer"><div><strong>AI 智慧筆記摘要器</strong><p>靜態作品展示，瀏覽網站不需要啟動 Ollama。</p></div><a href="https://github.com/Tagamano/ai-note-summarizer">在 GitHub 探索專案 ↗</a><a href="#">回到頂端 ↑</a></footer>
+</body>
+</html>
